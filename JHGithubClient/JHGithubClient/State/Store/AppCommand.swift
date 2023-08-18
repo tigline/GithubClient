@@ -12,10 +12,28 @@ protocol AppCommand {
     func execute(in store: Store)
 }
 
+struct LoadLoginUserCommand: AppCommand {
+    func execute(in store: Store) {
+        let token = SubscriptionToken()
+        LoadLoginUserRequest(user: store.appState.login.userId, token: store.appState.login.token)
+            .publisher.sink (
+                receiveCompletion: { complete in
+                    if case .failure(let error) = complete {
+                        store.dispatch(.loginDone(result: .failure(error)))
+                    }
+                    token.unseal()
+                }, receiveValue: { value in
+                    store.dispatch(.loginDone(result: .success(value)))
+                }
+            )
+            .seal(in: token)
+    }
+}
+
 struct LoadGithubUserListCommand: AppCommand {
     func execute(in store: Store) {
         let token = SubscriptionToken()
-        LoadGitHubUsersRequest(since: 0, perPage: 30, token: store.appState.settings.token)
+        LoadGitHubUsersRequest(since: 0, perPage: 30, token: store.appState.login.token)
             .publisher.sink (
                 receiveCompletion: { complete in
                     if case .failure(let error) = complete {
@@ -35,7 +53,7 @@ struct LoadGithubUserDetailCommand: AppCommand {
     func execute(in store: Store) {
         let token = SubscriptionToken()
         
-        LoadGitHubUserRequest(username: name, token: store.appState.settings.token)
+        LoadGitHubUserRequest(username: name, token: store.appState.login.token)
             .publisher.sink (
                 receiveCompletion: { complete in
                     if case .failure(let error) = complete {

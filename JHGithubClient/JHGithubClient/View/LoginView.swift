@@ -10,7 +10,11 @@ import SwiftUI
 struct LoginView: View {
     @EnvironmentObject var store:Store
     @State private var showingTokenAlert: Bool = false
-    @State private var token: String = "tigline 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"
+    @State private var username: String = ""
+    @State private var token: String = ""
+    private var login: AppState.Login {
+        store.appState.login
+    }
 
     var body: some View {
         VStack(spacing: 30) {
@@ -18,59 +22,66 @@ struct LoginView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: 100, height: 100)
-                
-            
-            Text("登录 GitHub")
+                .background(.black)
+                .clipShape(Circle())
+                .overlay(
+                    Circle().stroke(Color.white, lineWidth: 5)
+                )
+                .shadow(radius: 7)
+                .padding()
+                .clipShape(RoundedRectangle(cornerRadius: 20))
+            Text("Sign in GitHub")
                 .font(.largeTitle)
                 .padding(.bottom, 20)
             
-            Button(action: {
+            TextField("GitHub Username", text: $username)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal, 32)
+
+            SecureField("Token, Pasted here", text: $token)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .padding(.horizontal, 32)
                 
-                store.dispatch(.login(token: token))
-//                if let url = URL(string: "https://github.com/login/oauth/authorize") {
-//                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-//                }
-            }) {
-                Text("登录")
-                    .font(.headline)
-                    .frame(width: 280, height: 50)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(15)
-            }
+            Button("Login", action: {
+                store.dispatch(.login(user: username, token: token))
+            })
+                .disabled(login.isLoading)
             
+
+            if login.isLoading {
+                ProgressView()
+            }
+
             Button(action: {
-                
-                self.showingTokenAlert = true
+                store.dispatch(.defaultLogin)
             }) {
-                Text("输入令牌")
+                Text("Default User")
                     .font(.headline)
                     .frame(width: 280, height: 50)
                     .background(Color.gray)
                     .foregroundColor(.white)
                     .cornerRadius(15)
             }
+            
         }
         .padding()
-        .alert(isPresented: $showingTokenAlert) {
-            Alert(title: Text("输入令牌"), message: Text("请输入您的 GitHub 令牌"), textField: $token, primaryButton: .default(Text("确定")), secondaryButton: .cancel())
+        .alert(isPresented: $store.appState.showErrorAlert) {
+            Alert(title: Text("Error"),
+                  message: Text(store.appState.errorMessage),
+                  dismissButton: .default(Text("OK")) {
+                      store.dispatch(.dismissError)
+                  }
+            )
         }
-    }
-}
-
-
-extension Alert {
-    public init(title: Text, message: Text? = nil, textField: Binding<String>, primaryButton: Alert.Button = .default(Text("确定")), secondaryButton: Alert.Button = .cancel(Text("取消"))) {
-        self.init(title: title, message: message, primaryButton: primaryButton, secondaryButton: secondaryButton, textFields: [textField])
+        
     }
     
-    public init(title: Text, message: Text? = nil, primaryButton: Alert.Button = .default(Text("确定")), secondaryButton: Alert.Button = .cancel(Text("取消")), textFields: [Binding<String>]) {
-        self.init(title: title, message: message, textField: textFields.first!, primaryButton: primaryButton, secondaryButton: secondaryButton)
-    }
 }
 
-struct LoginView_Previews: PreviewProvider {
-    static var previews: some View {
-        LoginView()
-    }
-}
+
+
+//struct LoginView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LoginView()
+//    }
+//}

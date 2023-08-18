@@ -14,8 +14,8 @@ struct RootView: View {
         switch store.appState.viewRouter.currentPage {
         case .login:
             LoginView()
-        case .main:
-            RootTab()
+        case .main(viewModel:let model):
+            RootTab(viewModel:model)
         }
     }
 }

@@ -13,18 +13,18 @@ struct RepoCell: View {
         VStack(alignment: .leading) {
             Text(repo.name)
                 .font(.headline)
-            Text(repo.description ?? "")
+                .padding(.bottom, 3)
+            Text(repo.description ?? "None")
                 .foregroundColor(.gray)
                 .lineLimit(1)
+                .padding(.bottom, 2)
             HStack {
-                Text(repo.language ?? "")
+                Text(repo.language ?? "UnKnown")
                 .font(.subheadline)
                 Spacer()
                 Text("⭐️ \(repo.stargazersCount)")
             }
         }
-        .padding()
-        //.background(Color.gray.opacity(0.1))
-        //.cornerRadius(10)
+        .padding(.all, 5)
     }
 }

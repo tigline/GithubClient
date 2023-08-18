@@ -9,9 +9,8 @@ import SwiftUI
 
 struct RootTab: View {
     @EnvironmentObject var store: Store
-//    private var userListBinding:Binding<AppState.UserList> {
-//        $store.appState.userList
-//    }
+
+    var viewModel:MeViewModel
     var body: some View {
         TabView(selection: $store.appState.rootTab.selection) {
             UsersView().tabItem {
@@ -19,17 +18,25 @@ struct RootTab: View {
                 Text("Users")
             }.tag(AppState.RootTab.Index.list)
 
-            MeView().tabItem {
+            MeView(viewModel: viewModel).tabItem {
                 Image(systemName: "gear")
                 Text("Me")
             }.tag(AppState.RootTab.Index.settings)
         }
         .edgesIgnoringSafeArea(.top)
+        .alert(isPresented: $store.appState.showErrorAlert) {
+            Alert(title: Text("Error"),
+                  message: Text(store.appState.errorMessage),
+                  dismissButton: .default(Text("OK")) {
+                      store.dispatch(.dismissError)
+                  }
+            )
+        }
     }
 }
 
-struct RootTab_Previews: PreviewProvider {
-    static var previews: some View {
-        RootTab()
-    }
-}
+//struct RootTab_Previews: PreviewProvider {
+//    static var previews: some View {
+//        RootTab()
+//    }
+//}

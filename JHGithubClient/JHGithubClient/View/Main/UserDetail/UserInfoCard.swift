@@ -25,16 +25,17 @@ struct UserInfoCard: View {
                         .font(.headline)
                     Text("Followers")
                 }
+                Spacer()
                 VStack {
                     Text("\(viewModel.following)")
                         .font(.headline)
                     Text("Following")
                 }
-            }
+            }.padding(.horizontal, 32)
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(.white)
+        .background(Color(UIColor.secondarySystemBackground))
         .cornerRadius(10)
         .shadow(radius: 5)
         .padding(.bottom)

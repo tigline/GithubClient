@@ -10,17 +10,18 @@ import Foundation
 enum AppError: Error, Identifiable {
     var id: String { localizedDescription }
 
-    case requiresLogin
     case networkingFailed(Error)
+    case userNotFound(Error)
 }
 
 extension AppError: LocalizedError {
     var localizedDescription: String {
         switch self {
 
-        case .requiresLogin: return "Need Login"
         case .networkingFailed(let error): return error.localizedDescription
 
+        case .userNotFound(let error):
+            return error.localizedDescription
         }
     }
 }

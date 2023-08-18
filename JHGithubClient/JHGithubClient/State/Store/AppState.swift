@@ -10,10 +10,11 @@ import Combine
 
 struct AppState {
     var login = Login()
-    var settings = Settings()
     var rootTab = RootTab()
     var viewRouter: ViewRouter = .init(currentPage: .login)
     var userList = UserList()
+    var showErrorAlert: Bool = false
+    var errorMessage: String = ""
 }
 
 struct ViewRouter {
@@ -22,7 +23,7 @@ struct ViewRouter {
 
 enum Page {
     case login
-    case main
+    case main(viewModel:MeViewModel)
 }
 
 extension AppState {
@@ -47,20 +48,19 @@ extension AppState {
 
 }
 
-extension AppState {
-    struct Settings {
-        var token: String = ""
-    }
-}
-
 
 extension AppState {
     struct Login {
         enum loginState: CaseIterable {
             case loginOut, login
         }
-        
-        var isLogin:Bool = false
+        var userLoginError: AppError?
+        var isLoading:Bool = false
+        var userId: String = ""
+        var token: String = ""
+        var loginState:loginState = .loginOut
+        var user:User?
+
     }
 }
 

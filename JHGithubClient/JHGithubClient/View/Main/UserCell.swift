@@ -34,12 +34,12 @@ struct UserCell: View {
                 Text(viewModel.login)
                     .font(.title2)
                     .padding(.leading, 8)
-                    .foregroundColor(.black)
+                    .foregroundColor(Color(UIColor.label))
                 
                 Spacer()
             }
             .padding(.all, 10)
-            .background(.white)
+            .background(Color(UIColor.secondarySystemBackground))
             .cornerRadius(10)
             .shadow(radius: 5)
             
