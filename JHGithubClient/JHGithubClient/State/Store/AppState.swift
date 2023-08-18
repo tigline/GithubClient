@@ -13,6 +13,7 @@ struct AppState {
     var settings = Settings()
     var rootTab = RootTab()
     var viewRouter: ViewRouter = .init(currentPage: .login)
+    var userList = UserList()
 }
 
 struct ViewRouter {
@@ -22,6 +23,28 @@ struct ViewRouter {
 enum Page {
     case login
     case main
+}
+
+extension AppState {
+    struct UserList {
+        var users:[GitHubUserViewModel]?
+        var detailedUsers:[Int:UserDetailViewModel] = [:]
+        var userListLoadingError: AppError?
+        var isLoading = false
+        var searchText = ""
+        
+        func displayUsers()->[GitHubUserViewModel] {
+            guard !searchText.isEmpty else {
+                return users ?? []
+            }
+            return users?.filter{$0.login.contains(searchText.lowercased())} ?? []
+        }
+        
+        var detailUserId:Int?
+        
+    }
+    
+
 }
 
 extension AppState {

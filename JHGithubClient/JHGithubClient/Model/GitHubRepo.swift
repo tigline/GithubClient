@@ -7,10 +7,13 @@
 
 import Foundation
 
-struct GitHubRepo: Codable {
+struct GitHubRepo:Identifiable, Codable {
+
+    let id:Int
     let name: String
     let language: String?
     let stargazersCount: Int
     let description: String?
+    let htmlUrl: URL
     let fork: Bool
 }

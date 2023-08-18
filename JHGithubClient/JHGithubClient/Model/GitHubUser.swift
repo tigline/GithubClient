@@ -32,20 +32,19 @@ protocol GithubUserProtocol: Codable {
 protocol GithubUserDetaiProtocol:Codable {
     var name: String? { get }
     var company: String? { get }
-    var blog: String { get }
+    var blog: String? { get }
     var location: String? { get }
     var email: String? { get }
     var hireable: Bool? { get }
     var bio: String? { get }
     var twitterUsername: String? { get }
-    var publicRepos: Int { get }
-    var publicGists: Int { get }
-    var followers: Int { get }
-    var following: Int { get }
-    var createdAt: Date { get }
-    var updatedAt: Date { get }
+    var publicRepos: Int? { get }
+    var publicGists: Int? { get }
+    var followers: Int? { get }
+    var following: Int? { get }
+    var createdAt: Date? { get }
+    var updatedAt: Date? { get }
 }
-
 
 
 struct GitHubUser: GithubUserProtocol {
@@ -74,6 +73,8 @@ struct GitHubUser: GithubUserProtocol {
 
 
 struct GitHubDetailedUser: GithubUserProtocol, GithubUserDetaiProtocol {
+
+    
     let login: String
     let id: Int
     let nodeId: String
@@ -95,18 +96,18 @@ struct GitHubDetailedUser: GithubUserProtocol, GithubUserDetaiProtocol {
 
     let name: String?
     let company: String?
-    let blog: String
+    let blog: String?
     let location: String?
     let email: String?
     let hireable: Bool?
     let bio: String?
     let twitterUsername: String?
-    let publicRepos: Int
-    let publicGists: Int
-    let followers: Int
-    let following: Int
-    let createdAt: Date
-    let updatedAt: Date
+    let publicRepos: Int?
+    let publicGists: Int?
+    let followers: Int?
+    let following: Int?
+    let createdAt: Date?
+    let updatedAt: Date?
 
 
 }

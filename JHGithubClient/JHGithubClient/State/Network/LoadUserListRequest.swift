@@ -13,9 +13,10 @@ struct LoadGitHubUsersRequest {
     let perPage: Int
     let token: String
     
-    var publisher: AnyPublisher<[GitHubUser], Error> {
+    var publisher: AnyPublisher<[GitHubUser], AppError> {
         usersPublisher(since, perPage, token)
             .receive(on: DispatchQueue.main)
+            .mapError { AppError.networkingFailed($0) }
             .eraseToAnyPublisher()
     }
 
@@ -30,7 +31,12 @@ struct LoadGitHubUsersRequest {
         
         return URLSession.shared
             .dataTaskPublisher(for: request)
-            .map { $0.data }
+            .map { data, response -> Data in
+                if let string = String(data: data, encoding: .utf8) {
+                    print("Received JSON: \(string)")
+                }
+                return data
+            }
             .decode(type: [GitHubUser].self, decoder: appDecoder)
             .eraseToAnyPublisher()
     }

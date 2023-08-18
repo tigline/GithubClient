@@ -48,6 +48,38 @@ class Store: ObservableObject {
         case .logout:
             appState.login.isLogin = false
             appState.settings.token = ""
+        case .loadUserlist:
+            if appState.userList.isLoading {
+                break
+            }
+            appState.userList.userListLoadingError = nil
+            appState.userList.isLoading = true
+            appCommand = LoadGithubUserListCommand()
+        case .loadUserDetail(userId: let name):
+            appState.userList.isLoading = true
+            appCommand = LoadGithubUserDetailCommand(name: name)
+            break
+            
+        case .loadUserDetailDone(result: let result):
+            appState.userList.isLoading = false
+            switch result {
+            case .success(let model):
+                //appState.userList.users = models.map{GitHubUserViewModel(user: $0)}
+                appState.userList.detailedUsers.updateValue(model, forKey: model.id)
+                print("loading userDetail success")
+            case .failure(let error):
+                appState.userList.userListLoadingError = error
+            }
+            
+        case .loadUserlistDone(result: let result):
+            appState.userList.isLoading = false
+            switch result {
+            case .success(let models):
+                appState.userList.users = models.map{GitHubUserViewModel(user: $0)}
+                print("loading userList success")
+            case .failure(let error):
+                appState.userList.userListLoadingError = error
+            }
         }
         
         return (appState, appCommand)
