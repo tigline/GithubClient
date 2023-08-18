@@ -7,7 +7,48 @@
 
 import Foundation
 
-struct GitHubUser: Codable {
+protocol GithubUserProtocol: Codable {
+    var login: String { get }
+    var id: Int { get }
+    var nodeId: String { get }
+    var avatarUrl: URL { get }
+    var gravatarId: String { get }
+    var url: URL { get }
+    var htmlUrl: URL { get }
+    var followersUrl: URL { get }
+    var followingUrl: String { get }
+    var gistsUrl: String { get }
+    var starredUrl: String { get }
+    var subscriptionsUrl: URL { get }
+    var organizationsUrl: URL { get }
+    var reposUrl: URL { get }
+    var eventsUrl: String { get }
+    var receivedEventsUrl: URL { get }
+    var type: String { get }
+    var siteAdmin: Bool { get }
+    
+}
+
+protocol GithubUserDetaiProtocol:Codable {
+    var name: String? { get }
+    var company: String? { get }
+    var blog: String { get }
+    var location: String? { get }
+    var email: String? { get }
+    var hireable: Bool? { get }
+    var bio: String? { get }
+    var twitterUsername: String? { get }
+    var publicRepos: Int { get }
+    var publicGists: Int { get }
+    var followers: Int { get }
+    var following: Int { get }
+    var createdAt: Date { get }
+    var updatedAt: Date { get }
+}
+
+
+
+struct GitHubUser: GithubUserProtocol {
     let login: String
     let id: Int
     let nodeId: String
@@ -27,30 +68,12 @@ struct GitHubUser: Codable {
     let type: String
     let siteAdmin: Bool
 
-    enum CodingKeys: String, CodingKey {
-        case login
-        case id
-        case nodeId = "node_id"
-        case avatarUrl = "avatar_url"
-        case gravatarId = "gravatar_id"
-        case url
-        case htmlUrl = "html_url"
-        case followersUrl = "followers_url"
-        case followingUrl = "following_url"
-        case gistsUrl = "gists_url"
-        case starredUrl = "starred_url"
-        case subscriptionsUrl = "subscriptions_url"
-        case organizationsUrl = "organizations_url"
-        case reposUrl = "repos_url"
-        case eventsUrl = "events_url"
-        case receivedEventsUrl = "received_events_url"
-        case type
-        case siteAdmin = "site_admin"
-    }
 }
 
 
-struct GitHubDetailedUser: Codable {
+
+
+struct GitHubDetailedUser: GithubUserProtocol, GithubUserDetaiProtocol {
     let login: String
     let id: Int
     let nodeId: String
@@ -85,38 +108,8 @@ struct GitHubDetailedUser: Codable {
     let createdAt: Date
     let updatedAt: Date
 
-    enum CodingKeys: String, CodingKey {
-        case login, id, type
-        case nodeId = "node_id"
-        case avatarUrl = "avatar_url"
-        case gravatarId = "gravatar_id"
-        case url
-        case htmlUrl = "html_url"
-        case followersUrl = "followers_url"
-        case followingUrl = "following_url"
-        case gistsUrl = "gists_url"
-        case starredUrl = "starred_url"
-        case subscriptionsUrl = "subscriptions_url"
-        case organizationsUrl = "organizations_url"
-        case reposUrl = "repos_url"
-        case eventsUrl = "events_url"
-        case receivedEventsUrl = "received_events_url"
-        case siteAdmin = "site_admin"
-        case name, company, blog, location, email, hireable, bio
-        case twitterUsername = "twitter_username"
-        case publicRepos = "public_repos"
-        case publicGists = "public_gists"
-        case followers, following
-        case createdAt = "created_at"
-        case updatedAt = "updated_at"
-    }
+
 }
 
 
-struct GitHubRepo: Codable {
-    let name: String
-    let language: String?
-    let stargazersCount: Int
-    let description: String?
-    let fork: Bool
-}
+
