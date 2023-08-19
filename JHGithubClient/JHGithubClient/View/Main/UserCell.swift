@@ -41,7 +41,7 @@ struct UserCell: View {
             .padding(.all, 10)
             .background(Color(UIColor.secondarySystemBackground))
             .cornerRadius(10)
-            .shadow(radius: 5)
+            .shadow(radius: 2)
             
         }.padding(.horizontal,16)
     }

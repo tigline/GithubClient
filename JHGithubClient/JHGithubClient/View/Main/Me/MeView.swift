@@ -65,7 +65,7 @@ struct MeView: View {
                     .frame(maxWidth: .infinity)
                     .background(Color(UIColor.secondarySystemBackground))
                     .cornerRadius(10)
-                    .shadow(radius: 5)
+                    .shadow(radius: 2)
                     .padding(.bottom)
                     .padding(.horizontal, 16)
 
