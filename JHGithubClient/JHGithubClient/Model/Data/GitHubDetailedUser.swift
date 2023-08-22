@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import CoreModule
+
 struct GitHubDetailedUser: GithubUserProtocol, GithubUserDetaiProtocol {
 
     

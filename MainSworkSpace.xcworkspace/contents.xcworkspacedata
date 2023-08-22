@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <FileRef
+      location = "group:JHGithubClient/JHGithubClient.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:CoreModule">
+   </FileRef>
+   <FileRef
+      location = "group:MainModule">
+   </FileRef>
+   <FileRef
+      location = "group:LoginModule">
+   </FileRef>
+   <FileRef
+      location = "group:MeModule">
+   </FileRef>
+</Workspace>

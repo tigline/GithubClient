@@ -6,46 +6,7 @@
 //
 
 import Foundation
-
-protocol GithubUserProtocol: Codable {
-    var login: String { get }
-    var id: Int { get }
-    var nodeId: String { get }
-    var avatarUrl: URL { get }
-    var gravatarId: String { get }
-    var url: URL { get }
-    var htmlUrl: URL { get }
-    var followersUrl: URL { get }
-    var followingUrl: String { get }
-    var gistsUrl: String { get }
-    var starredUrl: String { get }
-    var subscriptionsUrl: URL { get }
-    var organizationsUrl: URL { get }
-    var reposUrl: URL { get }
-    var eventsUrl: String { get }
-    var receivedEventsUrl: URL { get }
-    var type: String { get }
-    var siteAdmin: Bool { get }
-    
-}
-
-protocol GithubUserDetaiProtocol:Codable {
-    var name: String? { get }
-    var company: String? { get }
-    var blog: String? { get }
-    var location: String? { get }
-    var email: String? { get }
-    var hireable: Bool? { get }
-    var bio: String? { get }
-    var twitterUsername: String? { get }
-    var publicRepos: Int? { get }
-    var publicGists: Int? { get }
-    var followers: Int? { get }
-    var following: Int? { get }
-    var createdAt: Date? { get }
-    var updatedAt: Date? { get }
-}
-
+import CoreModule
 
 struct GitHubUser: GithubUserProtocol {
     let login: String

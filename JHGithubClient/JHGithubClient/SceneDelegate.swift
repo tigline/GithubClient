@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         showMainTab(scene: scene, with: store)
       
     }
+    
     func scene(_ scene: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
         let store = Store()
         showMainTab(scene: scene, with: store)
@@ -30,9 +31,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     private func showMainTab(scene: UIScene, with store: Store) {
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
+
+            
+            
             window.rootViewController = UIHostingController(rootView:
                 RootView().environmentObject(store)
             )
+            
             self.window = window
             window.makeKeyAndVisible()
         }

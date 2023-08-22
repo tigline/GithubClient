@@ -4,20 +4,20 @@
 import PackageDescription
 
 let package = Package(
-    name: "MeModule",
+    name: "MainModule",
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "MeModule",
-            targets: ["MeModule"]),
+            name: "MainModule",
+            targets: ["MainModule"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "MeModule"),
+            name: "MainModule"),
         .testTarget(
-            name: "MeModuleTests",
-            dependencies: ["MeModule"]),
+            name: "MainModuleTests",
+            dependencies: ["MainModule"]),
     ]
 )
